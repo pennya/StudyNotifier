@@ -47,4 +47,49 @@ class MemberRepositoryTest {
         assertThat(nonExistingMember).isNotNull
 
     }
+
+    @Test
+    fun `전체 멤버 조회`() {
+        val member = Member(
+                email = "rlawlgns077@naver",
+                pw = "1234",
+                name = "kim",
+                profileUrl = "testUrl"
+        )
+
+        val member2 = Member(
+                email = "asdf",
+                pw = "1234",
+                name = "Park",
+                profileUrl = "testUrl2"
+        )
+
+        memberRepository.save(member)
+        memberRepository.save(member2)
+
+        for ((index,_member) in memberRepository.findAll().withIndex()) {
+            assertThat(_member).isNotNull
+            print(_member)
+        }
+    }
+
+    @Test
+    fun `멤버 정보 업데이트`() {
+        val member = Member(
+                email = "rlawlgns077@naver",
+                pw = "1234",
+                name = "kim",
+                profileUrl = "testUrl"
+        )
+
+        memberRepository.save(member)
+
+        val tempMember = memberRepository.findByEmail("rlawlgns077@naver").get()
+        tempMember.name = "Park"
+        memberRepository.save(tempMember)
+
+
+        val tempMember2 = memberRepository.findByEmail("rlawlgns077@naver").get()
+        assertThat(tempMember2.name).isEqualTo("Park")
+    }
 }
