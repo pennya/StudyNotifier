@@ -1,6 +1,7 @@
 package com.teamtuna.StudyNotifierApiServer
 
 import com.teamtuna.StudyNotifierApiServer.domain.Member
+import com.teamtuna.StudyNotifierApiServer.domain.Study
 import com.teamtuna.StudyNotifierApiServer.service.MemberRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -91,5 +92,43 @@ class MemberRepositoryTest {
 
         val tempMember2 = memberRepository.findByEmail("rlawlgns077@naver").get()
         assertThat(tempMember2.name).isEqualTo("Park")
+    }
+
+    @Test
+    fun `스터디 생성 및 조회`() {
+        val member = Member(
+                email = "rlawlgns077@naver",
+                pw = "1234",
+                name = "kim",
+                profileUrl = "testUrl"
+        )
+
+        memberRepository.save(member)
+
+        val study1 = Study(
+                startTime = System.currentTimeMillis(),
+                endTime = System.currentTimeMillis() + 100000,
+                date = System.currentTimeMillis(),
+                title = "스터디1",
+                description = "스터디 설명1",
+                member = member
+        )
+
+        member.addStudy(study1)
+
+        val study2 = Study(
+                startTime = System.currentTimeMillis(),
+                endTime = System.currentTimeMillis() + 100000,
+                date = System.currentTimeMillis(),
+                title = "스터디2",
+                description = "스터디 설명2",
+                member = member
+        )
+
+        member.addStudy(study2)
+
+        val tempMember = memberRepository.findByEmail("rlawlgns077@naver").get()
+        assertThat(tempMember.study[0].title).isEqualTo("스터디1")
+        assertThat(tempMember.study[1].title).isEqualTo("스터디2")
     }
 }

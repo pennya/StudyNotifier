@@ -1,6 +1,7 @@
 package com.teamtuna.StudyNotifierApiServer.service
 
 import com.teamtuna.StudyNotifierApiServer.domain.Member
+import com.teamtuna.StudyNotifierApiServer.domain.Study
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
@@ -50,5 +51,10 @@ class MemberService {
     // 회원 찾기 (email)
     fun findByEmail(email: String): Optional<Member> {
         return memberRepository.findByEmail(email)
+    }
+
+    // 특정 회원의 모든 스터디 찾기
+    fun findAllStudy(id: Long): MutableList<Study> {
+        return memberRepository.findById(id).get().study
     }
 }
