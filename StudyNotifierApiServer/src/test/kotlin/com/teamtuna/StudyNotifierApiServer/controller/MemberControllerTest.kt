@@ -6,7 +6,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
@@ -18,16 +17,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-internal class StudyControllerTest {
+internal class MemberControllerTest {
 
     @Autowired
-    lateinit var studyController: StudyController
+    lateinit var memberController: MemberController
 
     var mockMvc: MockMvc? = null
 
     @Before
     fun setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(studyController).build()
+        mockMvc = MockMvcBuilders.standaloneSetup(memberController).build()
     }
 
     @Test
