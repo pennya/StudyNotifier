@@ -10,7 +10,7 @@ data class Member(
         var pw: String,
         var name: String,
         @Column(name = "profile_url") var profileUrl: String,
-        @OneToMany(mappedBy = "member") var study: MutableList<Study> = mutableListOf()
+        @OneToMany(mappedBy = "member", fetch = FetchType.EAGER) var study: MutableList<Study> = mutableListOf()
 ) {
     fun addStudy(study: Study) {
         this.study.add(study)
