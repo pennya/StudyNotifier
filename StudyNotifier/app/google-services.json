@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1000216108190",
+    "firebase_url": "https://studynotifyer.firebaseio.com",
+    "project_id": "studynotifyer",
+    "storage_bucket": "studynotifyer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000216108190:android:b13628d5186748df48ef8f",
+        "android_client_info": {
+          "package_name": "com.teamtuna.studynotifier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000216108190-t4706f16gvg4jbnb917evl0luoo9gmb3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teamtuna.studynotifier",
+            "certificate_hash": "9077573e1d516a1b297a79c7c20ec2b763c1c29a"
+          }
+        },
+        {
+          "client_id": "1000216108190-hl6hp4eenus8rsrg9dc3o7t9bsc1l7d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdZFeDmpLzkaVNS-qIh425v2tJy6t9sHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000216108190-hl6hp4eenus8rsrg9dc3o7t9bsc1l7d3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
