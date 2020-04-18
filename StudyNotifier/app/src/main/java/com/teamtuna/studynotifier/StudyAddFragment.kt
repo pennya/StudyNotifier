@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.teamtuna.studynotifier.base.BaseCoroutineFragment
 
-class StudyAddFragment : Fragment() {
+class StudyAddFragment : BaseCoroutineFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +29,7 @@ class StudyAddFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_save -> {
+                // TODO  Study Add ViewModel -> Study Add Api
                 findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
                 true
             }

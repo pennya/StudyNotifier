@@ -1,28 +1,20 @@
 package com.teamtuna.studynotifier
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.teamtuna.studynotifier.base.BaseCoroutineFragment
 import com.teamtuna.studynotifier.util.milliSecondsToString
 import kotlinx.android.synthetic.main.fragment_timer.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import kotlin.coroutines.CoroutineContext
 
-class TimerFragment : Fragment(), CoroutineScope {
-
-    private lateinit var job: Job
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+class TimerFragment : BaseCoroutineFragment() {
 
     private var isTimerRunning = false
     private var runningTime = 0L
@@ -39,8 +31,6 @@ class TimerFragment : Fragment(), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        job = Job()
-
         circleImageView.setOnClickListener {
             if (!isTimerRunning) {
                 circleImageView.setImageResource(R.drawable.ic_stop)
@@ -52,7 +42,7 @@ class TimerFragment : Fragment(), CoroutineScope {
                         textTimer.text = milliSecondsToString(runningTime)
                     }
                 }
-                // push viewModel
+                // TODO  push viewModel -> push api
             } else {
                 circleImageView.setImageResource(R.drawable.ic_play)
                 isTimerRunning = false
@@ -60,11 +50,6 @@ class TimerFragment : Fragment(), CoroutineScope {
                 findNavController().navigate(R.id.action_TimerFragment_to_StudyAddFragment)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        job.cancel()
     }
 
     companion object {
