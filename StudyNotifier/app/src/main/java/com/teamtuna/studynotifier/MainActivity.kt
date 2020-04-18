@@ -18,7 +18,7 @@ import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity(), CoroutineScope {
 
-    lateinit var job: Job
+    private lateinit var job: Job
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             if (!isTimerRunning) {
                 circleImageView.setImageResource(R.drawable.ic_stop_black_24dp)
                 isTimerRunning = true
-                tickerChannel = ticker(delayMillis = 1_000, initialDelayMillis = 0)
+                tickerChannel = ticker(delayMillis = 1_000, initialDelayMillis = 1_000)
                 launch {
                     for (event in tickerChannel) {
                         runningTime += 1_000L
