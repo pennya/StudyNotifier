@@ -1,11 +1,8 @@
 package com.teamtuna.studynotifier
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import androidx.navigation.fragment.findNavController
 
 class StudyAddFragment : Fragment() {
@@ -20,9 +17,21 @@ class StudyAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
-        view.findViewById<Button>(R.id.button_second).setOnClickListener {
-            findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_study_add, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_save -> {
+                findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
