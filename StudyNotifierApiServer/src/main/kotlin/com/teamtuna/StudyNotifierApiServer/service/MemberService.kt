@@ -38,6 +38,7 @@ class MemberService {
         tempMember.email = member.email
         tempMember.name = member.name
         tempMember.pw = member.pw
+        tempMember.deviceToken = member.deviceToken
         tempMember.profileUrl = member.profileUrl
 
         return memberRepository.save(tempMember)

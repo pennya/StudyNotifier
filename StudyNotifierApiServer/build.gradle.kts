@@ -36,6 +36,9 @@ dependencies {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
 	testImplementation("org.springframework.batch:spring-batch-test")
+
+	// firebase push
+	implementation("com.google.firebase:firebase-admin:6.5.0")
 }
 
 tasks.withType<Test> {
