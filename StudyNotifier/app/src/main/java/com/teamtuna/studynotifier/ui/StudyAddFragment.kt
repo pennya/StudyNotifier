@@ -34,8 +34,8 @@ class StudyAddFragment : BaseCoroutineFragment() {
         observeUi()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_study_add, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_study_add, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -50,11 +50,11 @@ class StudyAddFragment : BaseCoroutineFragment() {
     }
 
     private fun observeUi() {
-        studyAddViewModel.study.observe(this, Observer {
+        studyAddViewModel.study.observe(viewLifecycleOwner, Observer {
             findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
         })
 
-        studyAddViewModel.dataLoading.observe(this, Observer { isDataLoading ->
+        studyAddViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
             if (isDataLoading) {
                 showProgress()
             } else {
