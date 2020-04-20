@@ -2,13 +2,12 @@ package com.teamtuna.studynotifier.base
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
-open class BaseCoroutineFragment: Fragment(), CoroutineScope {
+open class BaseCoroutineFragment: BaseFragment(), CoroutineScope {
 
     private lateinit var job: Job
 

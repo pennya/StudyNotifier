@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/TimerFragment"
-        android:name="com.teamtuna.studynotifier.TimerFragment"
+        android:name="com.teamtuna.studynotifier.ui.TimerFragment"
         android:label="Timer Fragment"
         tools:layout="@layout/fragment_timer">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/StudyAddFragment"
-        android:name="com.teamtuna.studynotifier.StudyAddFragment"
+        android:name="com.teamtuna.studynotifier.ui.StudyAddFragment"
         android:label="Study Add Fragment"
         tools:layout="@layout/fragment_study_add">
 

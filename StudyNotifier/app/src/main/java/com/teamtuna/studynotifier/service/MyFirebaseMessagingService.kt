@@ -11,8 +11,9 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.teamtuna.studynotifier.MainActivity
+import com.teamtuna.studynotifier.ui.MainActivity
 import com.teamtuna.studynotifier.R
+import com.teamtuna.studynotifier.util.PP
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -20,6 +21,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String?) {
         super.onNewToken(token)
         sendRegistrationToServer(token)
+        sendRegistrationToLocal(token)
         println(token)
     }
 
@@ -31,6 +33,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun sendRegistrationToServer(token: String?) {
         // TODO  push api server
+
+        // 회원인 경우 token 값 일치하는지 비교
+        // 토근값 변경 || 토큰값 없는 경우 업데이트
+    }
+
+    private fun sendRegistrationToLocal(token: String?) {
+        token?.let {
+            PP.PUSH_TOKEN.set(it)
+        }
     }
 
     private fun sendNotification(

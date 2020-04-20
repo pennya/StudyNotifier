@@ -1,11 +1,11 @@
-package com.teamtuna.studynotifier
+package com.teamtuna.studynotifier.ui
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.iid.FirebaseInstanceId
+import com.teamtuna.studynotifier.R
+import com.teamtuna.studynotifier.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,12 +1,23 @@
-package com.teamtuna.studynotifier
+package com.teamtuna.studynotifier.ui
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.teamtuna.studynotifier.R
 import com.teamtuna.studynotifier.base.BaseCoroutineFragment
+import com.teamtuna.studynotifier.viewmodel.StudyAddViewModel
+
 
 class StudyAddFragment : BaseCoroutineFragment() {
+
+    private lateinit var studyAddViewModel: StudyAddViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        studyAddViewModel = ViewModelProviders.of(this).get(StudyAddViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,6 +30,8 @@ class StudyAddFragment : BaseCoroutineFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+
+        observeUi()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -29,11 +42,24 @@ class StudyAddFragment : BaseCoroutineFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_save -> {
-                // TODO  Study Add ViewModel -> Study Add Api
-                findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
+                studyAddViewModel.addStudy()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun observeUi() {
+        studyAddViewModel.study.observe(this, Observer {
+            findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
+        })
+
+        studyAddViewModel.dataLoading.observe(this, Observer { isDataLoading ->
+            if (isDataLoading) {
+                showProgress()
+            } else {
+                dismissProgress()
+            }
+        })
     }
 }
