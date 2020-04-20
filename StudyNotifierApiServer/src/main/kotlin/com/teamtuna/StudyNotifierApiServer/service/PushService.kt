@@ -24,9 +24,11 @@ class PushService {
     @Autowired
     lateinit var memberRepository: MemberRepository
 
+    @Autowired
+    lateinit var restTemplate: RestTemplate
+
     @Async
     fun sendMessage(entity: HttpEntity<String>): CompletableFuture<String>? {
-        val restTemplate = RestTemplate()
         val interceptors = ArrayList<ClientHttpRequestInterceptor>()
         interceptors.add(HeaderRequestInterceptor("Authorization", "key=$FIREBASE_SERVER_KEY"))
         interceptors.add(HeaderRequestInterceptor("Content-Type", "application/json; UTF-8 "))
