@@ -28,4 +28,8 @@ object RetrofitService {
     suspend fun signUp(member: Member): ApiResult<Member> {
         return service.signUp(member)
     }
+
+    suspend fun addPush(memberId: Long, msg: String) {
+        service.addPush(memberId, msg)
+    }
 }

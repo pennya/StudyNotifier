@@ -7,16 +7,19 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.teamtuna.studynotifier.R
 import com.teamtuna.studynotifier.base.BaseCoroutineFragment
+import com.teamtuna.studynotifier.viewmodel.PushViewModel
 import com.teamtuna.studynotifier.viewmodel.StudyAddViewModel
 
 
 class StudyAddFragment : BaseCoroutineFragment() {
 
     private lateinit var studyAddViewModel: StudyAddViewModel
+    private lateinit var pushViewModel: PushViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         studyAddViewModel = ViewModelProviders.of(this).get(StudyAddViewModel::class.java)
+        pushViewModel = ViewModelProviders.of(this).get(PushViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -51,6 +54,7 @@ class StudyAddFragment : BaseCoroutineFragment() {
 
     private fun observeUi() {
         studyAddViewModel.study.observe(viewLifecycleOwner, Observer {
+            pushViewModel.addPushMessage("스터디 종료!")
             findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
         })
 

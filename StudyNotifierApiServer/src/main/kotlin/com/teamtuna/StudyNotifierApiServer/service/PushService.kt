@@ -1,5 +1,6 @@
 package com.teamtuna.StudyNotifierApiServer.service
 
+import com.teamtuna.StudyNotifierApiServer.domain.Push
 import org.codehaus.jettison.json.JSONArray
 import org.codehaus.jettison.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,6 +28,14 @@ class PushService {
     @Autowired
     lateinit var restTemplate: RestTemplate
 
+    fun addPushMessage(memberId: Long, msg: String) {
+        val push = pushRepository.save(Push(memberId = memberId, message = msg))
+        push.id?.let {
+            val foundPush = pushRepository.findById(it)
+            println("등록된 Push : $foundPush")
+        }
+    }
+
     @Async
     fun sendMessage(entity: HttpEntity<String>): CompletableFuture<String>? {
         val interceptors = ArrayList<ClientHttpRequestInterceptor>()
@@ -38,7 +47,6 @@ class PushService {
     }
 
     fun sendMessage(): String {
-        // TODO  push table 에서 push 보낼 값 있는지 확인하고 유저 엔티티에서 토큰 값 구해서 보내기
         val deviceTokens = mutableListOf<String>()
         var name = ""
 
@@ -46,12 +54,13 @@ class PushService {
         for (member in memberRepository.findAll()) {
             deviceTokens.add(member.deviceToken)
         }
+        println(deviceTokens)
 
         for (push in pushRepository.findAll()) {
             val member = memberRepository.findById(push.memberId)
             name = member.get().name
 
-            val json = createPushJson(deviceTokens, "$name 님의 메시지입니다.", "내용입니다")
+            val json = createPushJson(deviceTokens, "$name 님 ${push.message}", push.message)
             val request = HttpEntity(json)
 
             // Firebase api call

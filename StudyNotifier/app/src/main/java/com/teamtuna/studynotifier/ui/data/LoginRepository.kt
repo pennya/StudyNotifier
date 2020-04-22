@@ -1,5 +1,6 @@
 package com.teamtuna.studynotifier.ui.data
 
+import com.teamtuna.studynotifier.ui.data.model.LoggedInMember
 import com.teamtuna.studynotifier.ui.data.model.Member
 
 class LoginRepository(val dataSource: LoginDataSource) {
@@ -12,6 +13,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
 
         if (result is Result.Success) {
             member = result.data
+            LoggedInMember.member = member
         }
 
         return result

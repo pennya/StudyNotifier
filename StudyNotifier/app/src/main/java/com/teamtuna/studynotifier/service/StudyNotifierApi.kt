@@ -20,4 +20,12 @@ interface StudyNotifierApi {
             @Field("email") email: String,
             @Field("pwd") pwd: String
     ): ApiResult<Member>
+
+    @FormUrlEncoded
+    @POST("/rest/v1/push")
+    suspend fun addPush(
+        @Field("memberId") memberId: Long,
+        @Field("msg") msg: String
+    )
+
 }

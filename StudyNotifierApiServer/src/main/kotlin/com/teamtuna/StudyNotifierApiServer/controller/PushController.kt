@@ -15,13 +15,19 @@ class PushController {
     @Autowired
     lateinit var pushService: PushService
 
+    @RequestMapping(value = ["/rest/v1/push"], method = [RequestMethod.POST])
+    fun addPushMessage(memberId: Long, msg: String) {
+        pushService.addPushMessage(memberId, msg)
+    }
+
     //@Scheduled(fixedDelay = 60_000 * 5)
+    @Scheduled(fixedDelay = 10_000)
     @RequestMapping(value = ["/rest/v1/push"], method = [RequestMethod.GET])
     @ResponseBody fun send(): String {
         return pushService.sendMessage()
     }
 
-    @Scheduled(fixedDelay = 10_000)
+    //@Scheduled(fixedDelay = 10_000)
     @RequestMapping(value = ["/rest/v1/push_test"], method = [RequestMethod.GET])
     @ResponseBody fun sendForTest(): ResponseEntity<String> {
         return pushService.sendMessageForTest()

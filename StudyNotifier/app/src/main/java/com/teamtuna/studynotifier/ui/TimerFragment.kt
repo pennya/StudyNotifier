@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.teamtuna.studynotifier.R
 import com.teamtuna.studynotifier.base.BaseCoroutineFragment
 import com.teamtuna.studynotifier.util.milliSecondsToString
+import com.teamtuna.studynotifier.viewmodel.PushViewModel
 import kotlinx.android.synthetic.main.fragment_timer.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.ticker
@@ -19,6 +21,12 @@ class TimerFragment : BaseCoroutineFragment() {
     private var isTimerRunning = false
     private var runningTime = 0L
     private lateinit var tickerChannel: ReceiveChannel<Unit>
+    private lateinit var pushViewModel: PushViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        pushViewModel = ViewModelProviders.of(this).get(PushViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +50,8 @@ class TimerFragment : BaseCoroutineFragment() {
                         textTimer.text = milliSecondsToString(runningTime)
                     }
                 }
-                // TODO  push viewModel -> push api
+
+                pushViewModel.addPushMessage("스터디 시작!")
             } else {
                 circleImageView.setImageResource(R.drawable.ic_play)
                 isTimerRunning = false
