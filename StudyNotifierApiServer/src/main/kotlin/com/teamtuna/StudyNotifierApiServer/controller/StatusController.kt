@@ -27,13 +27,10 @@ class StatusController {
                 totalStudyTime = 0,
                 lastUpdatedTime = System.currentTimeMillis(),
                 grade = "브론즈",
-                member = memberService.findOne(memberId)
+                member = memberService.findOne(memberId).data!!
         ))
-        try {
-            println(status)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+
+        println(status)
         return status
     }
 }

@@ -1,25 +1,35 @@
 package com.teamtuna.studynotifier.ui.data
 
-import com.teamtuna.studynotifier.ui.data.model.LoggedInUser
+import com.teamtuna.studynotifier.service.RetrofitService
+import com.teamtuna.studynotifier.ui.data.model.ApiErrorCode.INCORRECT_LOGIN_ID_AND_PASSWORD
+import com.teamtuna.studynotifier.ui.data.model.Member
+import com.teamtuna.studynotifier.util.PP
 import java.io.IOException
 
-/**
- * Class that handles authentication w/ login credentials and retrieves user information.
- */
 class LoginDataSource {
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    suspend fun login(email: String, pwd: String): Result<Member> {
         try {
-            // TODO: handle loggedInUser authentication
-            val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
-            return Result.Success(fakeUser)
+            var member = RetrofitService.login(email, pwd)
+            member.error?.let {
+                when (it.apiErrorCode) {
+                    INCORRECT_LOGIN_ID_AND_PASSWORD -> {
+                        member = RetrofitService.signUp(
+                                Member(
+                                        email = email,
+                                        pw = pwd,
+                                        deviceToken = PP.PUSH_TOKEN.getString("") ?: ""
+                                )
+                        )
+                    }
+                    else -> {}
+                }
+            }
+
+            return member.data?.let { Result.Success(it) } ?: Result.Error()
         } catch (e: Throwable) {
             return Result.Error(IOException("Error logging in", e))
         }
-    }
-
-    fun logout() {
-        // TODO: revoke authentication
     }
 }
 

@@ -29,7 +29,8 @@ internal class StatusServiceTest {
         )
 
         val addedMember = memberService.addMember(member)
-        var status: Status? = addedMember.id?.let { statusService.findOneById(it) }
+        println(addedMember)
+        var status: Status? = addedMember.data?.id?.let { statusService.findOneById(it) }
         if (status == null) {
             status = Status(
                     totalStudyTime = System.currentTimeMillis(),
@@ -38,7 +39,7 @@ internal class StatusServiceTest {
             )
             val addedStatus = statusService.addStatus(status)
 
-            val status2 = addedMember.id?.let { statusService.findOneById(it) }
+            val status2 = addedMember.data?.id?.let { statusService.findOneById(it) }
             assertThat(status2?.member?.id).isEqualTo(addedStatus.member.id)
         }
     }

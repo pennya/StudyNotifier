@@ -79,6 +79,12 @@ class PushService {
         val name = "홍길동"
 
         deviceTokens.add(deviceToken)
+        // 가입된 회원의 모든 디바이스 리스트
+        for (member in memberRepository.findAll()) {
+            deviceTokens.add(member.deviceToken)
+        }
+        println(deviceTokens)
+
         val json = createPushJson(deviceTokens, "$name 님의 메시지입니다.", "내용입니다")
         val request = HttpEntity(json)
 

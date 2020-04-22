@@ -51,9 +51,10 @@ internal class StatusControllerTest {
         )
 
         val addedMember = memberService.addMember(member)
+        println(addedMember)
 
         val requestParams = LinkedMultiValueMap<String, String>()
-        requestParams.add("memberId", addedMember.id.toString())
+        requestParams.add("memberId", addedMember.data?.id.toString())
 
         mockMvc?.perform(MockMvcRequestBuilders.get("/rest/v1/status")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

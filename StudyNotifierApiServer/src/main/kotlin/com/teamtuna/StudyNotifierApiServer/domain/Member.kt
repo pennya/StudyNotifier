@@ -9,8 +9,8 @@ data class Member(
         var email: String,
         var pw: String,
         var name: String,
-        var deviceToken: String,
-        @Column(name = "profile_url") var profileUrl: String,
+        var deviceToken: String = "",
+        @Column(name = "profile_url") var profileUrl: String = "",
         @OneToMany(mappedBy = "member", fetch = FetchType.EAGER) var study: MutableList<Study> = mutableListOf()
 ) {
     fun addStudy(study: Study) {
