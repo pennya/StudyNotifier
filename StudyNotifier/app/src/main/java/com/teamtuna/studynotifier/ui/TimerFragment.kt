@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.teamtuna.studynotifier.R
@@ -56,7 +57,9 @@ class TimerFragment : BaseCoroutineFragment() {
                 circleImageView.setImageResource(R.drawable.ic_play)
                 isTimerRunning = false
                 tickerChannel.cancel()
-                findNavController().navigate(R.id.action_TimerFragment_to_StudyAddFragment)
+
+                val bundle = bundleOf("runningTime" to runningTime)
+                findNavController().navigate(R.id.action_TimerFragment_to_StudyAddFragment, bundle)
             }
         }
     }

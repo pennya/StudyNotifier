@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.teamtuna.studynotifier.R
 import com.teamtuna.studynotifier.base.BaseCoroutineFragment
 import com.teamtuna.studynotifier.util.afterTextChanged
+import com.teamtuna.studynotifier.util.milliSecondsToString
 import com.teamtuna.studynotifier.viewmodel.PushViewModel
 import kotlinx.android.synthetic.main.fragment_study_add.*
 
@@ -17,10 +18,14 @@ class StudyAddFragment : BaseCoroutineFragment() {
     private lateinit var studyViewModel: StudyViewModel
     private lateinit var pushViewModel: PushViewModel
 
+    private var runningTime: Long = 0L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         studyViewModel = ViewModelProviders.of(this).get(StudyViewModel::class.java)
         pushViewModel = ViewModelProviders.of(this).get(PushViewModel::class.java)
+
+        runningTime = arguments?.getLong("runningTime") ?: 0L
     }
 
     override fun onCreateView(
@@ -35,6 +40,7 @@ class StudyAddFragment : BaseCoroutineFragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        studyTime.text = milliSecondsToString(runningTime)
         studyTitleEdit.afterTextChanged {
             studyViewModel.studyDataChanged(studyTitleEdit.text.toString())
         }
