@@ -1,5 +1,6 @@
 package com.teamtuna.studynotifier.util
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
@@ -17,4 +18,9 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
     })
+}
+
+
+fun Context.Toast(message: String) {
+    android.widget.Toast.makeText(this, message, android.widget.Toast.LENGTH_SHORT).show()
 }

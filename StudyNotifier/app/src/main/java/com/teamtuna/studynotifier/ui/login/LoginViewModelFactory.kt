@@ -2,8 +2,8 @@ package com.teamtuna.studynotifier.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teamtuna.studynotifier.ui.data.LoginDataSource
-import com.teamtuna.studynotifier.ui.data.LoginRepository
+import com.teamtuna.studynotifier.ui.data.login.LoginDataSource
+import com.teamtuna.studynotifier.ui.data.login.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

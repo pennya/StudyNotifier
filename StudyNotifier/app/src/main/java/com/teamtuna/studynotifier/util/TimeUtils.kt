@@ -7,3 +7,8 @@ fun milliSecondsToString(milliSeconds: Long): String {
 
     return String.format("%02d : %02d : %02d", hour, minute, second)
 }
+
+
+fun getStartTime() = System.currentTimeMillis()
+
+fun getLastTime(runningTime: Long) = getStartTime() + runningTime

@@ -2,6 +2,7 @@ package com.teamtuna.studynotifier.service
 
 import com.teamtuna.studynotifier.ui.data.model.ApiResult
 import com.teamtuna.studynotifier.ui.data.model.Member
+import com.teamtuna.studynotifier.ui.data.model.Study
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -28,4 +29,8 @@ interface StudyNotifierApi {
         @Field("msg") msg: String
     )
 
+    @POST("/rest/v1/study")
+    suspend fun addStudy(
+        @Body study: Study
+    ): ApiResult<Study>
 }

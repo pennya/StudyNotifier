@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teamtuna.studynotifier.R
-import com.teamtuna.studynotifier.ui.data.LoginRepository
-import com.teamtuna.studynotifier.ui.data.Result
+import com.teamtuna.studynotifier.ui.data.login.LoginRepository
+import com.teamtuna.studynotifier.ui.data.UiResult
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -19,7 +19,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     suspend fun login(email: String, pwd: String) {
         val result = loginRepository.login(email, pwd)
 
-        if (result is Result.Success) {
+        if (result is UiResult.Success) {
             _loginResult.value = LoginResult(success = result.data)
         } else {
             _loginResult.value = LoginResult(error = R.string.login_failed)

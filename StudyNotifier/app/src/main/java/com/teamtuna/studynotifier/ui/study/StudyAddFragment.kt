@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.teamtuna.studynotifier.R
 import com.teamtuna.studynotifier.base.BaseCoroutineFragment
+import com.teamtuna.studynotifier.ui.data.UiResult
+import com.teamtuna.studynotifier.util.Toast
 import com.teamtuna.studynotifier.util.afterTextChanged
 import com.teamtuna.studynotifier.util.milliSecondsToString
 import com.teamtuna.studynotifier.viewmodel.PushViewModel
@@ -56,7 +58,11 @@ class StudyAddFragment : BaseCoroutineFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_save -> {
-                studyViewModel.addStudy()
+                studyViewModel.addStudy(
+                    studyTitleEdit.text.toString(),
+                    studyDescriptionEdit.text.toString(),
+                    runningTime
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -70,8 +76,16 @@ class StudyAddFragment : BaseCoroutineFragment() {
         })
 
         studyViewModel.study.observe(viewLifecycleOwner, Observer {
-            pushViewModel.addPushMessage("스터디 종료!")
-            findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
+            when (it) {
+                is UiResult.Success -> {
+                    pushViewModel.addPushMessage("스터디 종료!")
+                    findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
+                }
+                is UiResult.Error -> {
+                    it.exception?.printStackTrace()
+                    context?.Toast("스터디 생성 실패")
+                }
+            }
         })
 
         studyViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->

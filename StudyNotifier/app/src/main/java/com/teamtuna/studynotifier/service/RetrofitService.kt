@@ -2,6 +2,7 @@ package com.teamtuna.studynotifier.service
 
 import com.teamtuna.studynotifier.ui.data.model.ApiResult
 import com.teamtuna.studynotifier.ui.data.model.Member
+import com.teamtuna.studynotifier.ui.data.model.Study
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -21,6 +22,10 @@ object RetrofitService {
 
     private val service: StudyNotifierApi = retrofit.create(StudyNotifierApi::class.java)
 
+
+    /**
+     * Member
+     */
     suspend fun login(email: String, pwd: String): ApiResult<Member> {
         return service.login(email, pwd)
     }
@@ -29,7 +34,19 @@ object RetrofitService {
         return service.signUp(member)
     }
 
+
+    /**
+     * Push
+     */
     suspend fun addPush(memberId: Long, msg: String) {
         service.addPush(memberId, msg)
+    }
+
+
+    /**
+     * Study
+     */
+    suspend fun addStudy(study: Study): ApiResult<Study> {
+        return service.addStudy(study)
     }
 }
