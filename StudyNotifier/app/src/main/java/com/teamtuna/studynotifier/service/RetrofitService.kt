@@ -8,10 +8,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitService {
 
     // 회사 proxy
-    const val END_POINT = "http://10.205.135.66:8080"
+    //const val END_POINT = "http://10.205.135.66:8080"
 
     // ngrok
-    //const val END_POINT = "http://"
+    const val END_POINT = "http://b2c3eb6c.ngrok.io"
 
     private val retrofit =
             Retrofit.Builder()

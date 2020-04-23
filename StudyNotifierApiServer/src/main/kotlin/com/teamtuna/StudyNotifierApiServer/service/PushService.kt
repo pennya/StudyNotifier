@@ -28,6 +28,18 @@ class PushService {
     @Autowired
     lateinit var restTemplate: RestTemplate
 
+    fun findIsNotSendPushList(): List<Push> {
+        return pushRepository.findByIsSendFalse()
+    }
+
+    fun updatePushStatus(id: Long) {
+        val push = pushRepository.findById(id)
+        if (push.isPresent) {
+            push.get().isSend = true
+            pushRepository.save(push.get())
+        }
+    }
+
     fun addPushMessage(memberId: Long, msg: String) {
         val push = pushRepository.save(Push(memberId = memberId, message = msg))
         push.id?.let {
@@ -56,7 +68,7 @@ class PushService {
         }
         println(deviceTokens)
 
-        for (push in pushRepository.findAll()) {
+        for (push in findIsNotSendPushList()) {
             val member = memberRepository.findById(push.memberId)
             name = member.get().name
 
@@ -70,7 +82,11 @@ class PushService {
             try {
                 val firebaseResponse = pushNotification?.get()
                 println(ResponseEntity(firebaseResponse, HttpStatus.OK))
-                // 메시지가 정상인지 실패인지 기록
+                // TODO  메시지가 정상인지 실패인지 기록
+
+                // Push 전송 성공 시 상태 값 변경
+                push.id?.let { updatePushStatus(it) }
+
                 return "Success"
 
             } catch (e: Exception) {

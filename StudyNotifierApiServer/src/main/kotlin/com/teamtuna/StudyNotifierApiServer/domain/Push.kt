@@ -9,5 +9,6 @@ import javax.persistence.Id
 data class Push(
         @Id @GeneratedValue(strategy = GenerationType.AUTO) var id: Long? = null,
         var memberId: Long,
-        var message: String
+        var message: String,
+        var isSend: Boolean = false
 )
