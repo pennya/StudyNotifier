@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/StudyAddFragment"
-        android:name="com.teamtuna.studynotifier.ui.StudyAddFragment"
+        android:name="com.teamtuna.studynotifier.ui.study.StudyAddFragment"
         android:label="Study Add Fragment"
         tools:layout="@layout/fragment_study_add">
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.StudyAddFragment">
+    tools:context=".ui.study.StudyAddFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/title_card"
@@ -13,7 +13,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="16dp">
+        app:cardUseCompatPadding="true"
+        app:cardElevation="8dp"
+        android:layout_margin="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -53,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title_card"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:padding="8dp"
@@ -84,6 +86,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/studyTitle"
             tools:text="오늘의 스터디"
+            android:background="@android:color/transparent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
@@ -120,6 +123,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/studyDescription"
             tools:text="내용 설명"
+            android:background="@android:color/transparent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 

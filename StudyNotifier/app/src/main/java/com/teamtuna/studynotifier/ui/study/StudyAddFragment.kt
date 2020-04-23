@@ -1,4 +1,4 @@
-package com.teamtuna.studynotifier.ui
+package com.teamtuna.studynotifier.ui.study
 
 import android.os.Bundle
 import android.view.*
@@ -7,18 +7,19 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.teamtuna.studynotifier.R
 import com.teamtuna.studynotifier.base.BaseCoroutineFragment
+import com.teamtuna.studynotifier.util.afterTextChanged
 import com.teamtuna.studynotifier.viewmodel.PushViewModel
-import com.teamtuna.studynotifier.viewmodel.StudyAddViewModel
+import kotlinx.android.synthetic.main.fragment_study_add.*
 
 
 class StudyAddFragment : BaseCoroutineFragment() {
 
-    private lateinit var studyAddViewModel: StudyAddViewModel
+    private lateinit var studyViewModel: StudyViewModel
     private lateinit var pushViewModel: PushViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        studyAddViewModel = ViewModelProviders.of(this).get(StudyAddViewModel::class.java)
+        studyViewModel = ViewModelProviders.of(this).get(StudyViewModel::class.java)
         pushViewModel = ViewModelProviders.of(this).get(PushViewModel::class.java)
     }
 
@@ -34,6 +35,10 @@ class StudyAddFragment : BaseCoroutineFragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        studyTitleEdit.afterTextChanged {
+            studyViewModel.studyDataChanged(studyTitleEdit.text.toString())
+        }
+
         observeUi()
     }
 
@@ -45,7 +50,7 @@ class StudyAddFragment : BaseCoroutineFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_save -> {
-                studyAddViewModel.addStudy()
+                studyViewModel.addStudy()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -53,12 +58,17 @@ class StudyAddFragment : BaseCoroutineFragment() {
     }
 
     private fun observeUi() {
-        studyAddViewModel.study.observe(viewLifecycleOwner, Observer {
+        studyViewModel.studyFormState.observe(viewLifecycleOwner, Observer {
+            if (it.titleError.isNotEmpty())
+                studyTitleEdit.error = it.titleError
+        })
+
+        studyViewModel.study.observe(viewLifecycleOwner, Observer {
             pushViewModel.addPushMessage("스터디 종료!")
             findNavController().navigate(R.id.action_StudyAddFragment_to_TimerFragment)
         })
 
-        studyAddViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
+        studyViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
             if (isDataLoading) {
                 showProgress()
             } else {
